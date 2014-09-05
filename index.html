@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <script src="js/phaser.js"></script>
+    <style>
+        canvas, html, body {
+            margin:0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            background-color: black;
+
+            height: 100%;
+            vertical-align: middle;
+        }
+    </style>
+    <script type="text/javascript">
+        var height = 480;
+        var width = 720;
+        var game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+    function preload(){
+        game.load.image("elephant", "res/elephant.png");   
+    }
+
+    function create(){
+        game.stage.backgroundColor = '#ffffff';
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        
+        elephants = game.add.group();
+
+        add_elephant(width/2,height/2,.4);
+
+    }
+
+    function update(){
+
+    }
+
+    function add_elephant(x,y,s){
+        var color_random = Math.floor(Math.random() * 4)
+        var bmd = game.make.bitmapData(256, 204);
+        bmd.draw(game.cache.getImage('elephant'), 0, 0);
+        bmd.update();
+        if(color_random == 0){
+            //pink elephant
+        }else if(color_random == 1){
+            //red elephant
+            bmd.replaceRGB(255, 0, 255, 255, 255, 0, 0, 100);
+        }else if(color_random == 2){
+            //blue elephant
+            bmd.replaceRGB(255, 0, 255, 255, 0, 0, 255, 100);
+        }else if(color_random == 3){
+            //green elephant
+            bmd.replaceRGB(255, 0, 255, 255, 0, 255, 0, 100);
+        }
+
+
+        var speed = Math.floor(Math.random() * 50) + 100;
+        var elephant = elephants.create(x, y, bmd);
+        elephant.scale.setTo(s,s);
+        game.physics.enable(elephant, Phaser.Physics.ARCADE);
+        elephant.body.velocity.setTo(speed, speed);
+        elephant.body.collideWorldBounds = true;
+        elephant.body.bounce.setTo(1, 1);
+    }
+
+</script>
+</head>
+<body>
+</body>
+</html>
