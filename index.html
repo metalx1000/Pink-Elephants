@@ -22,6 +22,12 @@
         function preload(){
             game.load.image("elephant", "res/elephant.png");   
             game.load.image("background", "res/background.png");   
+
+            game.load.audio('pop', ['res/pop.mp3','res/pop.ogg']);
+
+            for(var i = 0;i<4;i++){
+                game.load.audio('el' + i, ['res/sounds/el'+i+'.mp3','res/sounds/el'+i+'.ogg']);
+            }
         }
 
         function create(){
@@ -90,13 +96,19 @@
             var y = elephant.y;
             add_elephant(x,y,.4);            
             add_elephant(x,y,.4);            
+
+            var i = Math.floor(Math.random() * 4);
+            var snd = game.add.audio('el' + i);
+            snd.play();
             elephant.kill();
-            console.log("large elephant clicked");
+            //console.log("large elephant clicked");
         }
 
         function click_small_elephant(elephant){
+            var pop = game.add.audio('pop');
+            pop.play(); 
             elephant.kill();
-            console.log("small elephant clicked");
+            //console.log("small elephant clicked");
         }
 
         function click_background(){
