@@ -21,10 +21,15 @@
 
         function preload(){
             game.load.image("elephant", "res/elephant.png");   
+            game.load.image("background", "res/background.png");   
         }
 
         function create(){
             game.stage.backgroundColor = '#ffffff';
+            background = game.add.sprite(0, 0, 'background');
+            background.inputEnabled = true;
+            background.events.onInputDown.add(click_background, this);
+
             game.physics.startSystem(Phaser.Physics.ARCADE);
      
             elephants = game.add.group();
@@ -72,7 +77,7 @@
             elephant.rot = (Math.floor(Math.random() * 5) - 2) * .01;
 
             elephant.inputEnabled = true;
-            if(s >= .4){
+            if(s >= .5){
                 elephant.events.onInputDown.add(click_large_elephant, this);
             }else{
                 elephant.events.onInputDown.add(click_small_elephant, this);
@@ -83,8 +88,8 @@
         function click_large_elephant(elephant){
             var x = elephant.x;
             var y = elephant.y;
-            add_elephant(x,y,.2);            
-            add_elephant(x,y,.2);            
+            add_elephant(x,y,.4);            
+            add_elephant(x,y,.4);            
             elephant.kill();
             console.log("large elephant clicked");
         }
@@ -92,6 +97,13 @@
         function click_small_elephant(elephant){
             elephant.kill();
             console.log("small elephant clicked");
+        }
+
+        function click_background(){
+            var x = game.input.x - 96;
+            var y = game.input.y - 96;
+
+            add_elephant(x,y,.8);
         }
 
         function full_screen(){
