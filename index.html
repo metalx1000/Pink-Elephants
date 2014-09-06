@@ -35,6 +35,7 @@
             background = game.add.sprite(0, 0, 'background');
             background.inputEnabled = true;
             background.events.onInputDown.add(click_background, this);
+            //background.events.onInputOver.add(click_background, this);
 
             game.physics.startSystem(Phaser.Physics.ARCADE);
      
@@ -42,7 +43,6 @@
 
             add_elephant(width/2,height/2,.4);
             game.input.onDown.add(full_screen, this);
-            //game.input.onDown.add(click, this);
         }
 
         function update(){
@@ -85,8 +85,10 @@
             elephant.inputEnabled = true;
             if(s >= .5){
                 elephant.events.onInputDown.add(click_large_elephant, this);
+                //elephant.events.onInputOver.add(click_large_elephant, this);
             }else{
                 elephant.events.onInputDown.add(click_small_elephant, this);
+                //elephant.events.onInputOver.add(click_small_elephant, this);
             }
         }
 
