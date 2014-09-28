@@ -15,8 +15,8 @@
         }
     </style>
     <script type="text/javascript">
-        var height = 480;
-        var width = 720;
+        var height = 720;
+        var width = 1280;
         var game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
         function preload(){
@@ -75,6 +75,7 @@
             var speed_y = Math.floor(Math.random() * 300) - 150;
             var elephant = elephants.create(x, y, bmd);
             elephant.scale.setTo(s,s);
+            elephant.anchor.setTo(0.5, 0.5);
             game.physics.enable(elephant, Phaser.Physics.ARCADE);
             elephant.body.velocity.setTo(speed_x, speed_y);
             elephant.body.collideWorldBounds = true;
@@ -114,8 +115,8 @@
         }
 
         function click_background(){
-            var x = game.input.x - 96;
-            var y = game.input.y - 96;
+            var x = game.input.x;
+            var y = game.input.y;
 
             add_elephant(x,y,.8);
         }
