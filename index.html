@@ -17,6 +17,7 @@
     <script type="text/javascript">
         var height = 720;
         var width = 1280;
+        var snd;
         var game = new Phaser.Game(width, height, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
         function preload(){
@@ -24,6 +25,14 @@
             game.load.image("background", "res/background.png");   
 
             game.load.audio('pop', ['res/pop.mp3','res/pop.ogg']);
+
+
+            game.load.audio('pink', ['res/el_colors/pink.mp3','res/el_colors/pink.ogg']);
+            game.load.audio('red', ['res/el_colors/red.mp3','res/el_colors/red.ogg']);
+            game.load.audio('green', ['res/el_colors/green.mp3','res/el_colors/green.ogg']);
+            game.load.audio('blue', ['res/el_colors/blue.mp3','res/el_colors/blue.ogg']);
+            game.load.audio('yellow', ['res/el_colors/yellow.mp3','res/el_colors/yellow.ogg']);
+
 
             for(var i = 0;i<4;i++){
                 game.load.audio('el' + i, ['res/sounds/el'+i+'.mp3','res/sounds/el'+i+'.ogg']);
@@ -41,6 +50,7 @@
      
             elephants = game.add.group();
 
+            elephant_sound();
             add_elephant(width/2,height/2,.4);
             game.input.onDown.add(full_screen, this);
         }
@@ -53,23 +63,29 @@
         }
 
         function add_elephant(x,y,s){
+            snd.pause();
             var color_random = Math.floor(Math.random() * 4)
             var bmd = game.make.bitmapData(256, 204);
             bmd.draw(game.cache.getImage('elephant'), 0, 0);
             bmd.update();
             if(color_random == 0){
                 //pink elephant
+                if(s >= .5){snd = game.add.audio('pink');}
             }else if(color_random == 1){
                 //red elephant
                 bmd.replaceRGB(255, 0, 255, 255, 255, 0, 0, 255);
+                if(s >= .5){snd = game.add.audio('red');}
             }else if(color_random == 2){
                 //blue elephant
                 bmd.replaceRGB(255, 0, 255, 255, 0, 0, 255, 255);
+                if(s >= .5){snd = game.add.audio('blue');}
             }else if(color_random == 3){
                 //green elephant
                 bmd.replaceRGB(255, 0, 255, 255, 0, 255, 0, 255);
+                if(s >= .5){snd = game.add.audio('green');}
             }
 
+            if(s >= .5){snd.play();}
 
             var speed_x = Math.floor(Math.random() * 300) - 150;
             var speed_y = Math.floor(Math.random() * 300) - 150;
@@ -100,11 +116,15 @@
             add_elephant(x,y,.4);            
             add_elephant(x,y,.4);            
 
-            var i = Math.floor(Math.random() * 4);
-            var snd = game.add.audio('el' + i);
-            snd.play();
+            elephant_sound();
             elephant.kill();
             //console.log("large elephant clicked");
+        }
+
+        function elephant_sound(){
+            var i = Math.floor(Math.random() * 4);
+            snd = game.add.audio('el' + i);
+            snd.play();
         }
 
         function click_small_elephant(elephant){
